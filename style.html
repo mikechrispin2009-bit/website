@@ -1,0 +1,980 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>StyleHub Rwanda | Premium Shoes & Clothing - 50+ Products</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        :root {
+            --bg: #ffffff;
+            --surface: #f8f9fa;
+            --text: #1a1a2e;
+            --text-light: #6c757d;
+            --border: #e9ecef;
+            --primary: #e63946;
+            --primary-dark: #c1121f;
+            --primary-light: #ffccd5;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --shadow: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        body.dark {
+            --bg: #121212;
+            --surface: #1e1e2a;
+            --text: #f1f1f1;
+            --text-light: #a0a0b0;
+            --border: #2a2a35;
+            --primary: #f94144;
+            --primary-dark: #d62828;
+            --shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .header {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -12px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .theme-toggle {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--surface) 100%);
+            border-radius: 1.5rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .categories {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .category-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        .filter-select {
+            padding: 0.8rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: var(--surface);
+            cursor: pointer;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: var(--surface);
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 1.2rem;
+        }
+
+        .product-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .product-category {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-left: 0.5rem;
+        }
+
+        .size-color {
+            display: flex;
+            gap: 0.5rem;
+            margin: 0.8rem 0;
+            flex-wrap: wrap;
+        }
+
+        .size-btn, .color-btn {
+            padding: 0.3rem 0.7rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg);
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .size-btn.selected, .color-btn.selected {
+            background: var(--primary);
+            color: white;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            padding: 0.7rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .add-to-cart:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Fullscreen Modal */
+        .fullscreen-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .fullscreen-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            background: var(--bg);
+            border-radius: 1rem;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-fullscreen {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text);
+        }
+
+        .product-detail {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .detail-image {
+            width: 100%;
+            height: 500px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .product-detail {
+                grid-template-columns: 1fr;
+            }
+            .detail-image {
+                height: 300px;
+            }
+        }
+
+        .cart-modal, .checkout-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-content, .checkout-content {
+            background: var(--bg);
+            border-radius: 1rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .reviews-section {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--surface);
+            border-radius: 1rem;
+        }
+
+        .review {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .contact-form input, .contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="nav-container">
+            <div class="logo">👟 StyleHub Rwanda | 50+ Premium Products</div>
+            <div class="nav-links">
+                <a onclick="showHome()">Home</a>
+                <a onclick="showContact()">Contact</a>
+                <div class="cart-icon" onclick="openCart()">
+                    🛒 <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <button class="theme-toggle" onclick="toggleTheme()">🌓 Theme</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="mainContent"></div>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="cart-modal">
+        <div class="cart-content">
+            <h2>Your Cart</h2>
+            <div id="cartItems"></div>
+            <div id="cartTotal" style="font-size:1.3rem; font-weight:bold; margin:1rem 0;"></div>
+            <button class="btn-primary" onclick="showCheckout()">Proceed to Checkout</button>
+            <button class="btn-primary" style="background:gray; margin-top:0.5rem;" onclick="closeCart()">Close</button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="checkout-modal">
+        <div class="checkout-content">
+            <h2>Checkout - Cash on Delivery</h2>
+            <input type="text" id="fullName" placeholder="Full Name" style="width:100%; padding:0.8rem; margin:0.5rem 0;">
+            <input type="text" id="address" placeholder="Delivery Address" style="width:100%; padding:0.8rem; margin:0.5rem 0;">
+            <input type="tel" id="phone" placeholder="Phone Number" style="width:100%; padding:0.8rem; margin:0.5rem 0;">
+            <div id="checkoutSummary"></div>
+            <button class="btn-primary" onclick="placeOrder()">Place Order (Cash on Delivery)</button>
+            <button class="btn-primary" style="background:gray; margin-top:0.5rem;" onclick="closeCheckout()">Back</button>
+        </div>
+    </div>
+
+    <!-- Fullscreen Product Modal -->
+    <div id="fullscreenModal" class="fullscreen-modal">
+        <div class="fullscreen-content">
+            <button class="close-fullscreen" onclick="closeFullscreen()">&times;</button>
+            <div id="fullscreenContent"></div>
+        </div>
+    </div>
+
+    <script>
+        // ========== 52 PRODUCTS WITH REAL IMAGES ==========
+        const products = [
+            // Premium Men's Shoes (20,000+ RWF)
+            { id: 1, name: "Nike Air Max 270", category: "Men", type: "Shoes", price: 85000, originalPrice: 120000, sizes: ["S","M","L","XL"], colors: ["Black/Red","White/Blue","All Black"], image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400", rating: 4.8 },
+            { id: 2, name: "Adidas Ultraboost 22", category: "Men", type: "Shoes", price: 95000, originalPrice: 140000, sizes: ["S","M","L","XL"], colors: ["Black","White","Blue"], image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400", rating: 4.9 },
+            { id: 3, name: "Jordan Retro 4", category: "Men", type: "Shoes", price: 120000, originalPrice: 180000, sizes: ["S","M","L","XL"], colors: ["Black/Red","White/Cement"], image: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=400", rating: 5.0 },
+            { id: 4, name: "Puma RS-X", category: "Men", type: "Shoes", price: 65000, sizes: ["S","M","L","XL"], colors: ["White","Black","Red"], image: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=400", rating: 4.5 },
+            { id: 5, name: "New Balance 574", category: "Men", type: "Shoes", price: 55000, sizes: ["S","M","L","XL"], colors: ["Grey","Navy","Green"], image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400", rating: 4.6 },
+            
+            // Premium Women's Shoes (20,000+ RWF)
+            { id: 6, name: "Nike Air Force 1", category: "Women", type: "Shoes", price: 75000, originalPrice: 110000, sizes: ["S","M","L","XL"], colors: ["White","Black","Pink"], image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400", rating: 4.8 },
+            { id: 7, name: "Adidas NMD", category: "Women", type: "Shoes", price: 70000, sizes: ["S","M","L","XL"], colors: ["White","Black","Red"], image: "https://images.unsplash.com/photo-1597045566677-8cf032ed6634?w=400", rating: 4.7 },
+            { id: 8, name: "Gucci Sneakers", category: "Women", type: "Shoes", price: 250000, originalPrice: 350000, sizes: ["S","M","L"], colors: ["White/Red","Black/Green"], image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400", rating: 4.9 },
+            { id: 9, name: "Valentino Heels", category: "Women", type: "Shoes", price: 180000, originalPrice: 280000, sizes: ["S","M","L"], colors: ["Red","Black","Nude"], image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400", rating: 4.8 },
+            { id: 10, name: "Jimmy Choo", category: "Women", type: "Shoes", price: 220000, originalPrice: 320000, sizes: ["S","M","L"], colors: ["Silver","Gold","Black"], image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400", rating: 4.9 },
+            
+            // Kids Shoes
+            { id: 11, name: "Nike Kids Revolution", category: "Kids", type: "Shoes", price: 25000, sizes: ["S","M","L"], colors: ["Blue","Red","Pink"], image: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400", rating: 4.5 },
+            { id: 12, name: "Adidas Kids Run", category: "Kids", type: "Shoes", price: 22000, sizes: ["S","M","L"], colors: ["Black","White","Blue"], image: "https://images.unsplash.com/photo-1603808034942-5f63b6b6f8d9?w=400", rating: 4.4 },
+            { id: 13, name: "Puma Kids Sneakers", category: "Kids", type: "Shoes", price: 20000, sizes: ["S","M","L"], colors: ["Pink","Blue"], image: "https://images.unsplash.com/photo-1603808034942-5f63b6b6f8d9?w=400", rating: 4.3 },
+            
+            // Premium Men's Clothing (20,000+ RWF)
+            { id: 14, name: "Boss Suit", category: "Men", type: "Clothing", price: 150000, originalPrice: 250000, sizes: ["S","M","L","XL"], colors: ["Navy","Black","Grey"], image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=400", rating: 4.9 },
+            { id: 15, name: "Armani Jeans", category: "Men", type: "Clothing", price: 85000, originalPrice: 120000, sizes: ["28","30","32","34"], colors: ["Blue","Black"], image: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400", rating: 4.7 },
+            { id: 16, name: "Ralph Lauren Polo", category: "Men", type: "Clothing", price: 45000, sizes: ["S","M","L","XL"], colors: ["Navy","White","Red"], image: "https://images.unsplash.com/photo-1586363104864-3c5f2b3e4f5e?w=400", rating: 4.6 },
+            { id: 17, name: "Canada Goose Jacket", category: "Men", type: "Clothing", price: 350000, originalPrice: 500000, sizes: ["S","M","L","XL"], colors: ["Black","Navy","Red"], image: "https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?w=400", rating: 5.0 },
+            { id: 18, name: "Leather Biker Jacket", category: "Men", type: "Clothing", price: 120000, originalPrice: 180000, sizes: ["S","M","L","XL"], colors: ["Black","Brown"], image: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400", rating: 4.8 },
+            
+            // Premium Women's Clothing (20,000+ RWF)
+            { id: 19, name: "Chanel Dress", category: "Women", type: "Clothing", price: 280000, originalPrice: 400000, sizes: ["S","M","L"], colors: ["Black","Red","White"], image: "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?w=400", rating: 5.0 },
+            { id: 20, name: "Gucci Blazer", category: "Women", type: "Clothing", price: 195000, originalPrice: 290000, sizes: ["S","M","L"], colors: ["Pink","Black","White"], image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400", rating: 4.9 },
+            { id: 21, name: "Zara Winter Coat", category: "Women", type: "Clothing", price: 65000, sizes: ["S","M","L"], colors: ["Beige","Black","Navy"], image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=400", rating: 4.5 },
+            { id: 22, name: "Nike Sports Bra", category: "Women", type: "Clothing", price: 25000, sizes: ["S","M","L"], colors: ["Black","Pink","Blue"], image: "https://images.unsplash.com/photo-1576830385951-2f5ba9f8a2d9?w=400", rating: 4.4 },
+            { id: 23, name: "Lululemon Leggings", category: "Women", type: "Clothing", price: 55000, sizes: ["S","M","L"], colors: ["Black","Navy","Green"], image: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=400", rating: 4.7 },
+            
+            // More Shoes (20,000+ RWF)
+            { id: 24, name: "Balenciaga Triple S", category: "Men", type: "Shoes", price: 350000, originalPrice: 500000, sizes: ["S","M","L","XL"], colors: ["Black","White","Red"], image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400", rating: 4.9 },
+            { id: 25, name: "Yeezy 700", category: "Men", type: "Shoes", price: 280000, originalPrice: 400000, sizes: ["S","M","L","XL"], colors: ["Wave Runner","Black"], image: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=400", rating: 4.8 },
+            { id: 26, name: "Christian Louboutin", category: "Women", type: "Shoes", price: 450000, originalPrice: 650000, sizes: ["S","M","L"], colors: ["Red Sole","Black"], image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400", rating: 5.0 },
+            { id: 27, name: "Manolo Blahnik", category: "Women", type: "Shoes", price: 320000, originalPrice: 480000, sizes: ["S","M","L"], colors: ["Nude","Black"], image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400", rating: 4.9 },
+            
+            // Casual & Affordable (mix of prices)
+            { id: 28, name: "Vans Old Skool", category: "Men", type: "Shoes", price: 35000, sizes: ["S","M","L","XL"], colors: ["Black/White","Red"], image: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400", rating: 4.5 },
+            { id: 29, name: "Converse Chuck Taylor", category: "Women", type: "Shoes", price: 28000, sizes: ["S","M","L","XL"], colors: ["White","Black","Red"], image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400", rating: 4.6 },
+            { id: 30, name: "Crocs Classic", category: "Kids", type: "Shoes", price: 15000, sizes: ["S","M","L"], colors: ["Blue","Red","Yellow"], image: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400", rating: 4.2 },
+            
+            // Accessories
+            { id: 31, name: "Gucci Belt", category: "Accessories", type: "Accessories", price: 120000, originalPrice: 180000, sizes: ["S","M","L"], colors: ["Black","Brown"], image: "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?w=400", rating: 4.8 },
+            { id: 32, name: "Rolex Watch", category: "Accessories", type: "Accessories", price: 850000, originalPrice: 1200000, sizes: ["One Size"], colors: ["Gold","Silver"], image: "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=400", rating: 5.0 },
+            { id: 33, name: "Ray-Ban Sunglasses", category: "Accessories", type: "Accessories", price: 65000, sizes: ["One Size"], colors: ["Black","Gold"], image: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400", rating: 4.7 },
+            { id: 34, name: "Louis Vuitton Bag", category: "Women", type: "Accessories", price: 450000, originalPrice: 650000, sizes: ["One Size"], colors: ["Brown","Black"], image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400", rating: 4.9 },
+            { id: 35, name: "Hermes Scarf", category: "Women", type: "Accessories", price: 85000, sizes: ["One Size"], colors: ["Multi","Red"], image: "https://images.unsplash.com/photo-1601924638867-3a6de2b9a4a5?w=400", rating: 4.8 },
+            
+            // More affordable products
+            { id: 36, name: "Basic White Tee", category: "Men", type: "Clothing", price: 5000, sizes: ["S","M","L","XL"], colors: ["White","Black"], image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400", rating: 4.3 },
+            { id: 37, name: "Cotton Shorts", category: "Men", type: "Clothing", price: 8000, sizes: ["S","M","L","XL"], colors: ["Navy","Grey"], image: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=400", rating: 4.2 },
+            { id: 38, name: "Summer Tank Top", category: "Women", type: "Clothing", price: 6000, sizes: ["S","M","L"], colors: ["White","Pink","Yellow"], image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400", rating: 4.4 },
+            { id: 39, name: "Kids Summer Set", category: "Kids", type: "Clothing", price: 10000, sizes: ["S","M","L"], colors: ["Blue","Pink"], image: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=400", rating: 4.5 },
+            { id: 40, name: "Baseball Cap", category: "Accessories", type: "Accessories", price: 7000, sizes: ["One Size"], colors: ["Black","Red","Blue"], image: "https://images.unsplash.com/photo-1588850571404-5d85b6c9c9c9?w=400", rating: 4.3 },
+            
+            // Premium streetwear
+            { id: 41, name: "Supreme Hoodie", category: "Men", type: "Clothing", price: 95000, originalPrice: 140000, sizes: ["S","M","L","XL"], colors: ["Red","Black","White"], image: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=400", rating: 4.8 },
+            { id: 42, name: "Off-White Shirt", category: "Men", type: "Clothing", price: 125000, originalPrice: 180000, sizes: ["S","M","L","XL"], colors: ["White","Black"], image: "https://images.unsplash.com/photo-1586363104864-3c5f2b3e4f5e?w=400", rating: 4.9 },
+            { id: 43, name: "Balenciaga Hoodie", category: "Women", type: "Clothing", price: 180000, originalPrice: 280000, sizes: ["S","M","L"], colors: ["Black","Pink"], image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=400", rating: 4.8 },
+            { id: 44, name: "Vetements Sweater", category: "Women", type: "Clothing", price: 160000, originalPrice: 240000, sizes: ["S","M","L"], colors: ["Black","Red"], image: "https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?w=400", rating: 4.7 },
+            
+            // Sports gear
+            { id: 45, name: "Under Armour Shoes", category: "Men", type: "Shoes", price: 45000, sizes: ["S","M","L","XL"], colors: ["Black","Blue"], image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400", rating: 4.5 },
+            { id: 46, name: "Reebok Nano X2", category: "Men", type: "Shoes", price: 55000, sizes: ["S","M","L","XL"], colors: ["Black","White"], image: "https://images.unsplash.com/photo-1597045566677-8cf032ed6634?w=400", rating: 4.6 },
+            { id: 47, name: "Asics Running", category: "Women", type: "Shoes", price: 48000, sizes: ["S","M","L","XL"], colors: ["Pink","Blue"], image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400", rating: 4.5 },
+            { id: 48, name: "Saucony Jazz", category: "Women", type: "Shoes", price: 42000, sizes: ["S","M","L","XL"], colors: ["Grey","Blue"], image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400", rating: 4.4 },
+            
+            // Winter collection
+            { id: 49, name: "North Face Jacket", category: "Men", type: "Clothing", price: 95000, originalPrice: 150000, sizes: ["S","M","L","XL"], colors: ["Black","Navy"], image: "https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?w=400", rating: 4.8 },
+            { id: 50, name: "Columbia Fleece", category: "Women", type: "Clothing", price: 55000, sizes: ["S","M","L"], colors: ["Pink","Grey"], image: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=400", rating: 4.6 },
+            { id: 51, name: "Wool Scarf", category: "Accessories", type: "Accessories", price: 15000, sizes: ["One Size"], colors: ["Red","Black","Grey"], image: "https://images.unsplash.com/photo-1601924638867-3a6de2b9a4a5?w=400", rating: 4.5 },
+            { id: 52, name: "Leather Gloves", category: "Accessories", type: "Accessories", price: 25000, sizes: ["S","M","L"], colors: ["Black","Brown"], image: "https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?w=400", rating: 4.6 }
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('stylehub_cart')) || [];
+        let currentCategory = "All";
+        let searchQuery = "";
+        let priceFilter = "all";
+        let reviews = JSON.parse(localStorage.getItem('stylehub_reviews')) || [];
+        let selectedSizes = {};
+        let selectedColors = {};
+
+        function saveCart() {
+            localStorage.setItem('stylehub_cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').innerText = count;
+        }
+
+        function addToCart(productId, size, color) {
+            if (!size || !color) {
+                alert("Please select size and color first!");
+                return false;
+            }
+            const product = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId && item.size === size && item.color === color);
+            if (existing) {
+                existing.quantity++;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    size: size,
+                    color: color,
+                    quantity: 1,
+                    image: product.image
+                });
+            }
+            saveCart();
+            alert(`✓ Added ${product.name} (${size}, ${color}) to cart!`);
+            return true;
+        }
+
+        function openCart() {
+            const modal = document.getElementById('cartModal');
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartTotalDiv = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = "<p>🛒 Your cart is empty</p>";
+                cartTotalDiv.innerHTML = "";
+            } else {
+                cartItemsDiv.innerHTML = cart.map((item, idx) => `
+                    <div class="cart-item">
+                        <div>
+                            <strong>${item.name}</strong><br>
+                            Size: ${item.size}, Color: ${item.color}<br>
+                            ${item.price.toLocaleString()} RWF x ${item.quantity}
+                        </div>
+                        <div>
+                            <button onclick="updateCartQuantity(${idx}, -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="updateCartQuantity(${idx}, 1)">+</button>
+                            <button onclick="removeCartItem(${idx})" style="background:red; color:white; border:none; padding:0 8px; border-radius:5px;">×</button>
+                        </div>
+                    </div>
+                `).join('');
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                cartTotalDiv.innerHTML = `<strong>Total: ${total.toLocaleString()} RWF</strong>`;
+            }
+            modal.style.display = "flex";
+        }
+
+        function closeCart() {
+            document.getElementById('cartModal').style.display = "none";
+        }
+
+        function updateCartQuantity(index, delta) {
+            if (cart[index].quantity + delta <= 0) {
+                cart.splice(index, 1);
+            } else {
+                cart[index].quantity += delta;
+            }
+            saveCart();
+            openCart();
+        }
+
+        function removeCartItem(index) {
+            cart.splice(index, 1);
+            saveCart();
+            openCart();
+        }
+
+        function showCheckout() {
+            closeCart();
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('checkoutSummary').innerHTML = `
+                <h3>Order Summary</h3>
+                <p>Items: ${cart.reduce((s,i) => s + i.quantity, 0)}</p>
+                <p><strong>Total: ${total.toLocaleString()} RWF</strong></p>
+                <p>💰 Payment: Cash on Delivery</p>
+                <p>🚚 Delivery: 2-3 business days</p>
+            `;
+            document.getElementById('checkoutModal').style.display = "flex";
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').style.display = "none";
+        }
+
+        function placeOrder() {
+            const name = document.getElementById('fullName').value;
+            const address = document.getElementById('address').value;
+            const phone = document.getElementById('phone').value;
+            
+            if (!name || !address || !phone) {
+                alert("Please fill in all delivery details!");
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const order = {
+                id: Date.now(),
+                date: new Date().toLocaleString(),
+                customer: { name, address, phone },
+                items: [...cart],
+                total: total,
+                status: "Pending (Cash on Delivery)"
+            };
+            
+            let orders = JSON.parse(localStorage.getItem('stylehub_orders')) || [];
+            orders.push(order);
+            localStorage.setItem('stylehub_orders', JSON.stringify(orders));
+            
+            alert(`✅ ORDER PLACED SUCCESSFULLY!\n\nCustomer: ${name}\nTotal: ${total.toLocaleString()} RWF\nPayment: Cash on Delivery\nDelivery to: ${address}\n\nYou will receive a confirmation call within 24 hours.`);
+            
+            cart = [];
+            saveCart();
+            closeCheckout();
+            showHome();
+        }
+
+        function openFullscreen(product) {
+            const modal = document.getElementById('fullscreenModal');
+            const container = document.getElementById('fullscreenContent');
+            
+            container.innerHTML = `
+                <div class="product-detail">
+                    <div class="detail-image" style="background-image: url('${product.image}')"></div>
+                    <div>
+                        <h1 style="font-size:2rem; margin-bottom:0.5rem;">${product.name}</h1>
+                        <p style="color:var(--text-light); margin-bottom:0.5rem;">${product.category} • ${product.type}</p>
+                        <div style="margin:1rem 0;">
+                            <span style="font-size:2rem; color:var(--primary); font-weight:bold;">${product.price.toLocaleString()} RWF</span>
+                            ${product.originalPrice ? `<span class="original-price" style="font-size:1.2rem;">${product.originalPrice.toLocaleString()} RWF</span>` : ''}
+                            ${product.originalPrice ? `<span style="background:green; color:white; padding:4px 8px; border-radius:20px; margin-left:1rem;">SAVE ${Math.round((1 - product.price/product.originalPrice)*100)}%</span>` : ''}
+                        </div>
+                        <div style="margin:1rem 0;">
+                            <h3>⭐ ${product.rating} / 5.0</h3>
+                        </div>
+                        <div style="margin:1rem 0;">
+                            <h3>Select Size:</h3>
+                            <div class="size-color">
+                                ${product.sizes.map(s => `<button class="size-btn" onclick="selectSizeDetail(${product.id}, '${s}')">${s}</button>`).join('')}
+                            </div>
+                        </div>
+                        <div style="margin:1rem 0;">
+                            <h3>Select Color:</h3>
+                            <div class="size-color">
+                                ${product.colors.map(c => `<button class="color-btn" onclick="selectColorDetail(${product.id}, '${c}')">${c}</button>`).join('')}
+                            </div>
+                        </div>
+                        <button class="add-to-cart" style="padding:1rem; font-size:1.1rem;" onclick="addToCartFromDetail(${product.id})">🛒 Add to Cart</button>
+                        <button class="add-to-cart" style="background:#2ecc71; margin-top:0.5rem;" onclick="buyNow(${product.id})">⚡ Buy Now</button>
+                    </div>
+                </div>
+                <div style="margin-top:2rem; padding:1rem; background:var(--surface); border-radius:1rem;">
+                    <h3>Product Description</h3>
+                    <p>Authentic ${product.name} - Premium quality guaranteed. ${product.type === "Shoes" ? "Comfortable fit with durable sole." : "High-quality material with perfect fit."} Available in multiple sizes and colors. 100% genuine product with warranty.</p>
+                    <ul style="margin-top:1rem; margin-left:1.5rem;">
+                        <li>✓ Free shipping on orders over 50,000 RWF</li>
+                        <li>✓ 7-day return policy</li>
+                        <li>✓ Authenticity guaranteed</li>
+                        <li>✓ Secure checkout</li>
+                    </ul>
+                </div>
+            `;
+            modal.style.display = "block";
+            window.selectedDetailProduct = product;
+        }
+        
+        function selectSizeDetail(productId, size) {
+            if (!window.detailSelectedSizes) window.detailSelectedSizes = {};
+            window.detailSelectedSizes[productId] = size;
+            alert(`Size ${size} selected`);
+        }
+        
+        function selectColorDetail(productId, color) {
+            if (!window.detailSelectedColors) window.detailSelectedColors = {};
+            window.detailSelectedColors[productId] = color;
+            alert(`Color ${color} selected`);
+        }
+        
+        function addToCartFromDetail(productId) {
+            const size = window.detailSelectedSizes?.[productId];
+            const color = window.detailSelectedColors?.[productId];
+            if (!size || !color) {
+                alert("Please select both size and color first!");
+                return;
+            }
+            addToCart(productId, size, color);
+        }
+        
+        function buyNow(productId) {
+            const size = window.detailSelectedSizes?.[productId];
+            const color = window.detailSelectedColors?.[productId];
+            if (!size || !color) {
+                alert("Please select size and color first!");
+                return;
+            }
+            addToCart(productId, size, color);
+            closeFullscreen();
+            showCheckout();
+        }
+        
+        function closeFullscreen() {
+            document.getElementById('fullscreenModal').style.display = "none";
+        }
+
+        function getFilteredProducts() {
+            let filtered = products;
+            if (currentCategory !== "All") {
+                filtered = filtered.filter(p => p.category === currentCategory);
+            }
+            if (searchQuery) {
+                filtered = filtered.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            }
+            if (priceFilter !== "all") {
+                if (priceFilter === "under20000") filtered = filtered.filter(p => p.price < 20000);
+                else if (priceFilter === "20000-50000") filtered = filtered.filter(p => p.price >= 20000 && p.price <= 50000);
+                else if (priceFilter === "50000-100000") filtered = filtered.filter(p => p.price >= 50000 && p.price <= 100000);
+                else if (priceFilter === "100000+") filtered = filtered.filter(p => p.price >= 100000);
+            }
+            return filtered;
+        }
+
+        function renderProducts() {
+            const filtered = getFilteredProducts();
+            const grid = document.getElementById('productGrid');
+            if (!grid) return;
+            
+            if (filtered.length === 0) {
+                grid.innerHTML = "<p style='text-align:center;'>No products found. Try different filters!</p>";
+                return;
+            }
+            
+            grid.innerHTML = filtered.map(product => {
+                const currentSize = selectedSizes[product.id] || "";
+                const currentColor = selectedColors[product.id] || "";
+                return `
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('${product.image}')" onclick="openFullscreen(${JSON.stringify(product).replace(/"/g, '&quot;')})">
+                            ${product.originalPrice ? `<div class="product-badge">SALE</div>` : ''}
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title" onclick="openFullscreen(${JSON.stringify(product).replace(/"/g, '&quot;')})">${product.name}</div>
+                            <div class="product-category">${product.category} • ${product.type}</div>
+                            <div class="product-price">
+                                ${product.price.toLocaleString()} RWF
+                                ${product.originalPrice ? `<span class="original-price">${product.originalPrice.toLocaleString()} RWF</span>` : ''}
+                            </div>
+                            <div class="size-color">
+                                <div style="font-size:0.7rem; width:100%;">Size:</div>
+                                ${product.sizes.map(s => `<button class="size-btn ${currentSize === s ? 'selected' : ''}" onclick="event.stopPropagation(); selectSize(${product.id}, '${s}')">${s}</button>`).join('')}
+                            </div>
+                            <div class="size-color">
+                                <div style="font-size:0.7rem; width:100%;">Color:</div>
+                                ${product.colors.map(c => `<button class="color-btn ${currentColor === c ? 'selected' : ''}" onclick="event.stopPropagation(); selectColor(${product.id}, '${c}')">${c}</button>`).join('')}
+                            </div>
+                            <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id}, selectedSizes[${product.id}] || '', selectedColors[${product.id}] || '')">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectSize(productId, size) {
+            selectedSizes[productId] = size;
+            renderProducts();
+        }
+
+        function selectColor(productId, color) {
+            selectedColors[productId] = color;
+            renderProducts();
+        }
+
+        function addReview() {
+            const name = document.getElementById('reviewName')?.value || "Anonymous";
+            const rating = document.getElementById('reviewRating')?.value;
+            const comment = document.getElementById('reviewComment')?.value;
+            if (!comment) {
+                alert("Please write a review!");
+                return;
+            }
+            reviews.push({ name, rating: parseInt(rating), comment, date: new Date().toLocaleDateString() });
+            localStorage.setItem('stylehub_reviews', JSON.stringify(reviews));
+            renderReviews();
+            if (document.getElementById('reviewName')) document.getElementById('reviewName').value = "";
+            if (document.getElementById('reviewComment')) document.getElementById('reviewComment').value = "";
+            alert("Thank you for your review!");
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviewsContainer');
+            if (!container) return;
+            if (reviews.length === 0) {
+                container.innerHTML = "<p>No reviews yet. Be the first to review!</p>";
+                return;
+            }
+            container.innerHTML = reviews.slice().reverse().map(r => `
+                <div class="review">
+                    <strong>${r.name}</strong> ⭐ ${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}<br>
+                    <small>${r.date}</small>
+                    <p>${r.comment}</p>
+                </div>
+            `).join('');
+        }
+
+        function sendContact() {
+            const name = document.getElementById('contactName')?.value;
+            const email = document.getElementById('contactEmail')?.value;
+            const message = document.getElementById('contactMessage')?.value;
+            if (!name || !email || !message) {
+                alert("Please fill all fields!");
+                return;
+            }
+            const inquiries = JSON.parse(localStorage.getItem('stylehub_inquiries')) || [];
+            inquiries.push({ name, email, message, date: new Date().toLocaleString() });
+            localStorage.setItem('stylehub_inquiries', JSON.stringify(inquiries));
+            alert("✅ Message sent! We'll respond within 24 hours.");
+            if (document.getElementById('contactName')) document.getElementById('contactName').value = "";
+            if (document.getElementById('contactEmail')) document.getElementById('contactEmail').value = "";
+            if (document.getElementById('contactMessage')) document.getElementById('contactMessage').value = "";
+        }
+
+        function showHome() {
+            document.getElementById('mainContent').innerHTML = `
+                <div class="hero">
+                    <h1>🔥 StyleHub Rwanda</h1>
+                    <p>50+ Premium Products • Free Delivery on orders over 50,000 RWF</p>
+                    <p style="margin-top:0.5rem;">⭐ 4.8/5 from 1,000+ customers</p>
+                </div>
+                <div class="categories">
+                    <button class="category-btn ${currentCategory === 'All' ? 'active' : ''}" onclick="setCategory('All')">All (${products.length})</button>
+                    <button class="category-btn ${currentCategory === 'Men' ? 'active' : ''}" onclick="setCategory('Men')">Men (${products.filter(p=>p.category==='Men').length})</button>
+                    <button class="category-btn ${currentCategory === 'Women' ? 'active' : ''}" onclick="setCategory('Women')">Women (${products.filter(p=>p.category==='Women').length})</button>
+                    <button class="category-btn ${currentCategory === 'Kids' ? 'active' : ''}" onclick="setCategory('Kids')">Kids (${products.filter(p=>p.category==='Kids').length})</button>
+                    <button class="category-btn ${currentCategory === 'Accessories' ? 'active' : ''}" onclick="setCategory('Accessories')">Accessories (${products.filter(p=>p.category==='Accessories').length})</button>
+                </div>
+                <div class="search-bar">
+                    <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search 50+ products..." value="${searchQuery}">
+                    <select class="filter-select" id="priceFilter">
+                        <option value="all">💰 All Prices</option>
+                        <option value="under20000" ${priceFilter === 'under20000' ? 'selected' : ''}>Under 20,000 RWF</option>
+                        <option value="20000-50000" ${priceFilter === '20000-50000' ? 'selected' : ''}>20,000 - 50,000 RWF</option>
+                        <option value="50000-100000" ${priceFilter === '50000-100000' ? 'selected' : ''}>50,000 - 100,000 RWF</option>
+                        <option value="100000+" ${priceFilter === '100000+' ? 'selected' : ''}>100,000+ RWF (Premium)</option>
+                    </select>
+                </div>
+                <div class="product-grid" id="productGrid"></div>
+                <div class="reviews-section">
+                    <h3>⭐ Customer Reviews ⭐</h3>
+                    <div id="reviewsContainer"></div>
+                    <div class="review-form">
+                        <h4>Write a Review</h4>
+                        <input type="text" id="reviewName" placeholder="Your name">
+                        <select id="reviewRating">
+                            <option value="5">★★★★★ (5 - Excellent)</option>
+                            <option value="4">★★★★☆ (4 - Good)</option>
+                            <option value="3">★★★☆☆ (3 - Average)</option>
+                            <option value="2">★★☆☆☆ (2 - Poor)</option>
+                            <option value="1">★☆☆☆☆ (1 - Terrible)</option>
+                        </select>
+                        <textarea id="reviewComment" rows="3" placeholder="Share your experience with our products..."></textarea>
+                        <button class="btn-primary" onclick="addReview()">Submit Review</button>
+                    </div>
+                </div>
+            `;
+            renderProducts();
+            renderReviews();
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                searchQuery = e.target.value;
+                renderProducts();
+            });
+            document.getElementById('priceFilter').addEventListener('change', (e) => {
+                priceFilter = e.target.value;
+                renderProducts();
+            });
+        }
+
+        function showContact() {
+            document.getElementById('mainContent').innerHTML = `
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h2>📞 Contact StyleHub Rwanda</h2>
+                    <p>We're here to help 24/7!</p>
+                </div>
+                <div class="contact-form">
+                    <input type="text" id="contactName" placeholder="Full Name">
+                    <input type="email" id="contactEmail" placeholder="Email Address">
+                    <input type="text" id="contactPhone" placeholder="Phone Number">
+                    <textarea id="contactMessage" rows="5" placeholder="Your message or order inquiry..."></textarea>
+                    <button class="btn-primary" onclick="sendContact()">Send Message</button>
+                </div>
+                <div style="margin-top: 2rem; text-align: center; padding: 2rem; background: var(--surface); border-radius: 1rem;">
+                    <h4>📍 Our Location</h4>
+                    <p>KG 541 St, Kigali, Rwanda</p>
+                    <p>📧 support@stylehub.rw</p>
+                    <p>📞 +250 788 123 456</p>
+                    <p>📞 +250 788 789 012 (WhatsApp)</p>
+                    <p>⏰ Mon-Fri: 9AM - 7PM | Sat: 10AM - 5PM | Sun: Closed</p>
+                </div>
+            `;
+        }
+
+        function setCategory(cat) {
+            currentCategory = cat;
+            showHome();
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('stylehub_theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        if (localStorage.getItem('stylehub_theme') === 'dark') {
+            document.body.classList.add('dark');
+        }
+        updateCartCount();
+        showHome();
+    </script>
+</body>
+</html>
